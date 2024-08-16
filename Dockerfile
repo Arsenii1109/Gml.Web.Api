@@ -1,6 +1,6 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER $APP_UID
-WORKDIR /app
+WORKDIR /home/container
 EXPOSE 8080
 EXPOSE 8081
 
@@ -25,6 +25,6 @@ RUN dotnet publish "Gml.Web.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish 
 FROM adoptopenjdk:11-jdk AS java
 
 FROM base AS final
-WORKDIR /app
+WORKDIR /home/container
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Gml.Web.Api.dll"]
